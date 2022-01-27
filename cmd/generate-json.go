@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"encoding/json"
 	"flag"
-	"github.com/c0re100/gotdlib/tlparser"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/JasonKhew96/gotdlib/tlparser"
 )
 
 func main() {
