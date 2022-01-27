@@ -1,9 +1,10 @@
 package codegen
 
 import (
-	"github.com/c0re100/gotdlib/tlparser"
 	"log"
 	"strings"
+
+	"github.com/JasonKhew96/gotdlib/tlparser"
 )
 
 type tdlibFunction struct {

@@ -1,4 +1,4 @@
-module github.com/c0re100/gotdlib
+module github.com/JasonKhew96/gotdlib
 
 go 1.16
 
