@@ -17,8 +17,8 @@ func GetSenderId(sender tdlib.MessageSender) int64 {
 	}
 }
 
-func GetTdParameters() *tdlib.TdlibParameters {
-	return &tdlib.TdlibParameters{
+func GetTdParameters() *tdlib.SetTdlibParametersRequest {
+	return &tdlib.SetTdlibParametersRequest{
 		UseTestDc:              false,
 		DatabaseDirectory:      "./tdlib-db",
 		FilesDirectory:         "./tdlib-files",
@@ -68,7 +68,7 @@ func main() {
 		log.Fatalf("GetMe error: %s", err)
 	}
 
-	log.Printf("%s connected", me.Username)
+	log.Printf("%v connected", me.Usernames)
 
 	listener := client.AddEventReceiver(&tdlib.UpdateNewMessage{}, 1000)
 
@@ -97,8 +97,11 @@ func main() {
 					ParseMode: &tdlib.TextParseModeHTML{},
 				})
 				m, err := client.SendMessage(&tdlib.SendMessageRequest{
-					ChatId:           chatId,
-					ReplyToMessageId: msgId,
+					ChatId: chatId,
+					ReplyTo: &tdlib.MessageReplyToMessage{
+						ChatId:    chatId,
+						MessageId: msgId,
+					},
 					InputMessageContent: &tdlib.InputMessageText{
 						Text: text,
 					},
@@ -109,8 +112,11 @@ func main() {
 				log.Printf("Message sent, ID: %d", m.Id)
 			case "/repeat":
 				m, err := client.SendMessage(&tdlib.SendMessageRequest{
-					ChatId:           chatId,
-					ReplyToMessageId: msgId,
+					ChatId: chatId,
+					ReplyTo: &tdlib.MessageReplyToMessage{
+						ChatId:    chatId,
+						MessageId: msgId,
+					},
 					InputMessageContent: &tdlib.InputMessageText{
 						Text: &tdlib.FormattedText{Text: tdlib.CommandArgument(msgText)},
 					},
